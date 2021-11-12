@@ -21,6 +21,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'
 
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'org.postgresql:postgresql'
+
 	// Keycloak adapter
 	implementation 'org.keycloak:keycloak-spring-boot-starter:15.0.2'
 
