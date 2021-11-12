@@ -12,3 +12,13 @@ keycloak:
       securityCollections:
         - patterns:
             - /api/*
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?current_schema=apollon-music
+    username: postgres
+    password: postgres
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
