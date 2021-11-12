@@ -15,7 +15,7 @@ keycloak:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?current_schema=apollon-music
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
   jpa:
