@@ -1,4 +1,4 @@
-package com.github.aldebaranoro.apollonmusicresourceserver.api.playlists.model.entity;
+package com.github.aldebaranoro.apollonmusicresourceserver.api.model;
 
 import lombok.Getter;
 import lombok.Setter;

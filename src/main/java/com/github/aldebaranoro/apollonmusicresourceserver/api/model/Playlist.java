@@ -1,4 +1,4 @@
-package com.github.aldebaranoro.apollonmusicresourceserver.api.playlists.model.entity;
+package com.github.aldebaranoro.apollonmusicresourceserver.api.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,10 +30,6 @@ public class Playlist extends AbstractTimestampEntity {
 
     @Column(name = "is_private", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private Boolean isPrivate;
-
-    @ManyToOne
-    @JoinColumn(name = "music_service_id", nullable = false)
-    private MusicServiceSource musicService;
 
     @OneToMany(
             orphanRemoval = true,

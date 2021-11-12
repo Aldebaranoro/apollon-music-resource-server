@@ -1,4 +1,4 @@
-package com.github.aldebaranoro.apollonmusicresourceserver.api.playlists.model.entity;
+package com.github.aldebaranoro.apollonmusicresourceserver.api.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,11 +14,11 @@ abstract class AbstractTimestampEntity {
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private Date created;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column
+    @Column(nullable = false)
     private Date updated;
 }
