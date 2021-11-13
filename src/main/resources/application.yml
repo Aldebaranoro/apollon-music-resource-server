@@ -1,3 +1,21 @@
+#spring:
+#  profiles:
+#    active: dev
+
+keycloak:
+  auth-server-url: https://apollon-music-keycloak.herokuapp.com/auth
+  realm: "apollon-music"
+  resource: "resource-server"
+  bearer-only: true
+  security-constraints:
+    - authRoles:
+        - uma_authorization # authenticated users only
+      securityCollections:
+        - patterns:
+            - /api/*
+
 spring:
-  profiles:
-    active: dev
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
