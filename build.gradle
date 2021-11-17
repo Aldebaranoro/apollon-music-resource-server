@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-parent:2.5.6'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
