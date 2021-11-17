@@ -46,14 +46,15 @@ class PlaylistController {
                 .orElseThrow(() -> new RuntimeException("Не найдена сущность с заданным id!"));
     }
 
-    @PutMapping
-    public Playlist update(@RequestBody Playlist playlist) {
-        if (playlist.getId() == null) {
+    @PutMapping("/{id}")
+    public Playlist update(@PathVariable Long id, @RequestBody Playlist playlist) {
+        if (id == null) {
             throw new RuntimeException("Id сущности должен быть не null!");
         }
-        if (!playlistRepository.existsById(playlist.getId())) {
+        if (!playlistRepository.existsById(id)) {
             throw new RuntimeException("Не найдена сущность с заданным Id!");
         }
+        playlist.setId(id);
         return playlistRepository.save(playlist);
     }
 
