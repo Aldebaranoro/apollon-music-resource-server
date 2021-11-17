@@ -4,15 +4,6 @@ plugins {
 	id 'java'
 }
 
-jar {
-  manifest {
-    attributes(
-      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-      'Main-Class': 'com.github.aldebaranoro.apollonmusicresourceserver.ApollonMusicResourceServerApplication'
-    )
-  }
-}
-
 group = 'com.github.aldebaranoro'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
