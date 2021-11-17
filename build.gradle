@@ -4,6 +4,12 @@ plugins {
 	id 'java'
 }
 
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.github.aldebaranoro.apollonmusicresourceserver.ApollonMusicResourceServerApplication'
+	}
+}
+
 group = 'com.github.aldebaranoro'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
