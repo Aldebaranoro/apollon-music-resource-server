@@ -2,6 +2,9 @@
 #  profiles:
 #    active: dev
 
+server:
+  port: ${PORT:8080}
+
 keycloak:
   auth-server-url: https://apollon-music-keycloak.herokuapp.com/auth
   realm: "apollon-music"
