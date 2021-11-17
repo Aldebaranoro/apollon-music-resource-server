@@ -1,6 +1,6 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.controller;
 
-import com.github.aldebaranoro.apollonmusicresourceserver.api.model.MusicServiceSource;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity.MusicServiceSource;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.repository.MusicServiceSourceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

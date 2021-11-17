@@ -1,6 +1,6 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.controller;
 
-import com.github.aldebaranoro.apollonmusicresourceserver.api.model.Playlist;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity.Playlist;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.repository.PlaylistRepository;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.utils.KeycloakPrincipalUtils;
 import lombok.RequiredArgsConstructor;

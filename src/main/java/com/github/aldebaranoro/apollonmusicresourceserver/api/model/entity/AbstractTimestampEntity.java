@@ -1,4 +1,4 @@
-package com.github.aldebaranoro.apollonmusicresourceserver.api.model;
+package com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
