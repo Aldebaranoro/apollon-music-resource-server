@@ -40,11 +40,15 @@ class PlaylistController {
     }
 
     @PostMapping
-    public PlaylistRead create(@RequestBody PlaylistCreate playlist) {
+    public PlaylistRead create(
+            @RequestBody PlaylistCreate playlistCreate,
+            KeycloakPrincipal<KeycloakSecurityContext> principal
+    ) {
+        Playlist playlist = mapper.toEntity(playlistCreate);
+        playlist.setDiscordIdentity(KeycloakPrincipalUtils.getIdentityProviderId(principal));
+        playlist.setUserId(KeycloakPrincipalUtils.getUserId(principal));
         return mapper.toViewRead(
-                playlistRepository.save(
-                        mapper.toEntity(playlist)
-                )
+                playlistRepository.save(playlist)
         );
     }
 
@@ -56,7 +60,11 @@ class PlaylistController {
     }
 
     @PutMapping("/{id}")
-    public PlaylistRead update(@PathVariable Long id, @RequestBody PlaylistUpdate playlistUpdate) {
+    public PlaylistRead update(
+            @PathVariable Long id,
+            @RequestBody PlaylistUpdate playlistUpdate,
+            KeycloakPrincipal<KeycloakSecurityContext> principal
+    ) {
         if (id == null) {
             throw new RuntimeException("Id сущности должен быть не null!");
         }
@@ -65,6 +73,8 @@ class PlaylistController {
         }
         Playlist playlist = mapper.toEntity(playlistUpdate);
         playlist.setId(id);
+        playlist.setDiscordIdentity(KeycloakPrincipalUtils.getIdentityProviderId(principal));
+        playlist.setUserId(KeycloakPrincipalUtils.getUserId(principal));
         return mapper.toViewRead(
                 playlistRepository.save(playlist)
         );

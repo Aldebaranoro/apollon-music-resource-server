@@ -14,10 +14,6 @@ public class PlaylistUpdate {
 
     private String description;
 
-    private String userId;
-
-    private String discordIdentity;
-
     private boolean isPrivate;
 
     private Set<TrackRead> tracks;
