@@ -2,7 +2,6 @@ package com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -33,7 +32,7 @@ public class Playlist extends AbstractTimestampEntity {
 
     @OneToMany(
             orphanRemoval = true,
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "playlist_id")
