@@ -1,7 +1,13 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.model.view;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class PlaylistRead {
 
     private Long id;
@@ -14,7 +20,7 @@ public class PlaylistRead {
 
     private String discordIdentity;
 
-    private boolean isPrivate;
+    private Boolean isPrivate;
 
     private Set<TrackRead> tracks;
 }

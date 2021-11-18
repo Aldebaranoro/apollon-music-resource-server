@@ -14,7 +14,7 @@ public class PlaylistCreate {
 
     private String description;
 
-    private boolean isPrivate;
+    private Boolean isPrivate;
 
     private Set<TrackCreate> tracks;
 }
