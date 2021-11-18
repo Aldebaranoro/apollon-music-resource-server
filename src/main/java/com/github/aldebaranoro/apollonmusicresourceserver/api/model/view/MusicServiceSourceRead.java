@@ -7,13 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrackRead {
+public class MusicServiceSourceRead {
 
-    private Long id;
+    private Integer id;
 
-    private String url;
-
-    private String label;
-
-    private MusicServiceSourceRead musicService;
+    private String name;
 }
