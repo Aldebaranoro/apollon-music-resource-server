@@ -24,15 +24,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'org.postgresql:postgresql'
 
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
 	// Keycloak adapter
 	implementation 'org.keycloak:keycloak-spring-boot-starter:15.0.2'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.6'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.5.6'
 
 	// Mappers
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-
-	compileOnly 'org.projectlombok:lombok:1.18.22'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.6'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.5.6'
-	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
