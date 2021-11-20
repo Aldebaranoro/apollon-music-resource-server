@@ -33,7 +33,7 @@ public class PublicPlaylistController {
         return pagedResult.hasContent() ? mapper.toListViewRead(pagedResult.getContent()) : new ArrayList<>();
     }
 
-    @GetMapping("/discord")
+    @PostMapping("/discord")
     public List<PlaylistRead> findAllPublicPlaylistsByDiscordIdentities(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
