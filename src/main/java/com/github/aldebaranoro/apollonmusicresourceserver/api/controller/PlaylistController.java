@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -26,8 +27,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 class PlaylistController {
 
+    private static final int TRACKS_MAX_COUNT = 10;
+
     private final PlaylistRepository playlistRepository;
-    private PlaylistMapper mapper = PlaylistMapper.INSTANCE;
+    private final PlaylistMapper mapper = PlaylistMapper.INSTANCE;
 
     @GetMapping
     public List<PlaylistRead> read(
@@ -50,6 +53,7 @@ class PlaylistController {
         Playlist playlist = mapper.toEntity(playlistCreate);
         playlist.setDiscordIdentity(KeycloakPrincipalUtils.getIdentityProviderId(principal));
         playlist.setUserId(KeycloakPrincipalUtils.getUserId(principal));
+        checkTrackMaxCount(playlist);
         return mapper.toViewRead(
                 playlistRepository.save(playlist)
         );
@@ -78,6 +82,7 @@ class PlaylistController {
         playlist.setId(id);
         playlist.setDiscordIdentity(KeycloakPrincipalUtils.getIdentityProviderId(principal));
         playlist.setUserId(KeycloakPrincipalUtils.getUserId(principal));
+        checkTrackMaxCount(playlist);
         checkPlaylistTrackIds(playlist);
         return mapper.toViewRead(
                 playlistRepository.save(playlist)
@@ -120,5 +125,15 @@ class PlaylistController {
                 .stream()
                 .map(Track::getId)
                 .collect(Collectors.toSet());
+    }
+
+    private void checkTrackMaxCount(Playlist playlist) {
+        if (playlist.getTracks().size() > TRACKS_MAX_COUNT) {
+            String message = String.format(
+                    "Плейлист превышает допустимое число треков! Максимальная ёмкость плейлиста %s",
+                    TRACKS_MAX_COUNT
+            );
+            throw new RuntimeException(message);
+        }
     }
 }
