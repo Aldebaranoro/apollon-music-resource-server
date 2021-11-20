@@ -60,10 +60,15 @@ class PlaylistController {
     }
 
     @GetMapping("/{id}")
-    public PlaylistRead read(@PathVariable Long id) {
-        return playlistRepository.findById(id)
-                .map(mapper::toViewRead)
+    public PlaylistRead read(@PathVariable Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
+        Playlist playlist = playlistRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найдена сущность с заданным id!"));
+
+        if (!playlist.getUserId().equals(KeycloakPrincipalUtils.getUserId(principal))) {
+            throw new RuntimeException("У пользователя нету доступа к этому плейлисту!");
+        }
+
+        return mapper.toViewRead(playlist);
     }
 
     @PutMapping("/{id}")
