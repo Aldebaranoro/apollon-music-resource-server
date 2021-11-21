@@ -73,6 +73,23 @@ public class PlaylistService {
         return pagedResult.hasContent() ? pagedResult.getContent() : new ArrayList<>();
     }
 
+    public List<Playlist> getPlaylistsByDiscordIds(
+            Integer pageNumber,
+            Integer pageSize,
+            String sortBy,
+            Set<String> discordIds
+    ) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page<Playlist> pagedResult = playlistRepository.findAllPlaylistsByDiscordIdentities(paging, discordIds);
+        return pagedResult.hasContent() ? pagedResult.getContent() : new ArrayList<>();
+    }
+
+    public List<Playlist> getPlaylists(Integer pageNumber, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page<Playlist> pagedResult = playlistRepository.findAll(paging);
+        return pagedResult.hasContent() ? pagedResult.getContent() : new ArrayList<>();
+    }
+
     private void checkTrackMaxCount(Playlist playlist) {
         if (playlist.getTracks().size() > TRACKS_MAX_COUNT) {
             String message = String.format(

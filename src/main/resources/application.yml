@@ -8,14 +8,18 @@ server:
 keycloak:
   auth-server-url: https://apollon-music-keycloak.herokuapp.com/auth
   realm: "apollon-music"
-  resource: "resource-server"
+  resource: "resource-server-prod"
   bearer-only: true
-  security-constraints:
-    - authRoles:
-        - uma_authorization # authenticated users only
+
+  securityConstraints:
+    - authRoles: [ uma_authorization ]
       securityCollections:
-        - patterns:
-            - /api/*
+        - name: API Private Data
+          patterns: [ '/api/*' ]
+    - authRoles: [ ADMIN ]
+      securityCollections:
+        - name: ADMIN API
+          patterns: [ '/admin/api/*' ]
 
 spring:
   jpa:

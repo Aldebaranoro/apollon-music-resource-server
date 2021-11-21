@@ -20,4 +20,10 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     );
 
     Page<Playlist> findAllByUserId(Pageable pageable, String userId);
+
+    @Query("select p from playlists p where p.discordIdentity in :discordIdentities")
+    Page<Playlist> findAllPlaylistsByDiscordIdentities(
+            Pageable pageable,
+            @Param("discordIdentities") Set<String> discordIdentities
+    );
 }
