@@ -6,9 +6,11 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.Playlis
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistRead;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistUpdate;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.service.PlaylistService;
+import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Set;
 
@@ -50,7 +52,7 @@ class AdminPlaylistController {
             @RequestBody PlaylistCreate playlistCreate
     ) {
         if (userId == null) {
-            throw new RuntimeException("Идентификатор пользователя должен быть заполнен!");
+            throw new InvalidParameterException("Идентификатор пользователя должен быть заполнен!");
         }
 
         Playlist playlist = mapper.toEntity(playlistCreate);
@@ -77,10 +79,10 @@ class AdminPlaylistController {
             @RequestBody PlaylistUpdate playlistUpdate
     ) {
         if (id == null) {
-            throw new RuntimeException("Id сущности должен быть не null!");
+            throw new InvalidParameterException("Id сущности должен быть не null!");
         }
         if (!playlistService.playlistExistById(id)) {
-            throw new RuntimeException("Не найдена сущность с заданным Id!");
+            throw new ResourceNotFoundException("Не найдена сущность с заданным Id!");
         }
         Playlist playlist = mapper.toEntity(playlistUpdate);
         playlist.setId(id);

@@ -3,6 +3,7 @@ package com.github.aldebaranoro.apollonmusicresourceserver.api.service;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity.Playlist;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity.Track;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.repository.PlaylistRepository;
+import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -36,7 +38,7 @@ public class PlaylistService {
 
     public Playlist getPlaylistById(Long id) {
         return playlistRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Не найдена сущность с заданным id!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Не найдена сущность с заданным id!"));
     }
 
     public Playlist updatePlaylist(Playlist playlist) {
@@ -47,7 +49,7 @@ public class PlaylistService {
 
     public Playlist deletePlaylistById(Long id) {
         Playlist playlist = playlistRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Не найдена сущность с заданным Id!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Не найдена сущность с заданным Id!"));
         playlistRepository.deleteById(id);
         return playlist;
     }
@@ -96,7 +98,7 @@ public class PlaylistService {
                     "Плейлист превышает допустимое число треков! Максимальная ёмкость плейлиста %s",
                     TRACKS_MAX_COUNT
             );
-            throw new RuntimeException(message);
+            throw new InvalidParameterException(message);
         }
     }
 
@@ -116,7 +118,7 @@ public class PlaylistService {
                         "Нельзя добавить в плейлист трек с id = %s, так как он принадлежит другому плейлисту!",
                         id
                 );
-                throw new RuntimeException(message);
+                throw new InvalidParameterException(message);
             }
         });
     }
