@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/music-services")
+@RequestMapping("public/api/v1/music-services")
 @RequiredArgsConstructor
 public class MusicServiceSourceController {
 
