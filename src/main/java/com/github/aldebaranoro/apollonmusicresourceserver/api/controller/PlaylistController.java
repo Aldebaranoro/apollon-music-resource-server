@@ -81,7 +81,11 @@ class PlaylistController {
     }
 
     @DeleteMapping("/{id}")
-    public PlaylistRead delete(@PathVariable Long id) {
+    public PlaylistRead delete(@PathVariable Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
+        Playlist playlist = playlistService.getPlaylistById(id);
+        if (!playlist.getUserId().equals(KeycloakPrincipalUtils.getUserId(principal))) {
+            throw new RuntimeException("У пользователя нету доступа к этому плейлисту!");
+        }
         return mapper.toViewRead(
                 playlistService.deletePlaylistById(id)
         );
