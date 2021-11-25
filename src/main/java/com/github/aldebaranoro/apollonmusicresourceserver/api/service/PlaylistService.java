@@ -84,12 +84,23 @@ public class PlaylistService {
             String playlistName
     ) {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
-        Page<Playlist> pagedResult = playlistRepository.findAllPlaylistsByDiscordIdentities(
-                paging,
-                requesterDiscordIdentity,
-                requestedDiscordIdentities,
-                playlistName
-        );
+        Page<Playlist> pagedResult;
+
+        if (playlistName == null) {
+            pagedResult = playlistRepository.findAllPlaylistsByDiscordIdentities(
+                    paging,
+                    requesterDiscordIdentity,
+                    requestedDiscordIdentities
+            );
+        } else {
+            pagedResult = playlistRepository.findAllPlaylistsByDiscordIdentitiesAndPlaylistName(
+                    paging,
+                    requesterDiscordIdentity,
+                    requestedDiscordIdentities,
+                    playlistName
+            );
+        }
+
         return pagedResult.hasContent() ? pagedResult.getContent() : new ArrayList<>();
     }
 

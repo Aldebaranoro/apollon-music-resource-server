@@ -30,10 +30,27 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
      * @return список всех плейлистов отправителя и публичных других пользователей
      */
     @Query("select p from playlists p " +
+            "where p.isPrivate = false and p.discordIdentity in :requestedDiscordIdentities " +
+            "or p.discordIdentity = :requesterDiscordIdentity and p.discordIdentity in :requestedDiscordIdentities")
+    Page<Playlist> findAllPlaylistsByDiscordIdentities(
+            Pageable pageable,
+            @Param("requesterDiscordIdentity") String requesterDiscordIdentity,
+            @Param("requestedDiscordIdentities") Set<String> requestedDiscordIdentities
+    );
+
+    /**
+     * Возвращает список всех плейлистов отправителя и публичных других пользователей
+     *
+     * @param pageable                   пагинация
+     * @param requesterDiscordIdentity   Discord identity отправителя запроса
+     * @param requestedDiscordIdentities Discord identities, по которым происходит фильтрация
+     * @return список всех плейлистов отправителя и публичных других пользователей
+     */
+    @Query("select p from playlists p " +
             "where p.isPrivate = false and p.discordIdentity in :requestedDiscordIdentities" +
             "       or p.discordIdentity = :requesterDiscordIdentity and p.discordIdentity in :requestedDiscordIdentities" +
-            "       and (:playlistName is null or p.name like concat('%', :playlistName, '%'))")
-    Page<Playlist> findAllPlaylistsByDiscordIdentities(
+            "       and p.name like :playlistName")
+    Page<Playlist> findAllPlaylistsByDiscordIdentitiesAndPlaylistName(
             Pageable pageable,
             @Param("requesterDiscordIdentity") String requesterDiscordIdentity,
             @Param("requestedDiscordIdentities") Set<String> requestedDiscordIdentities,
