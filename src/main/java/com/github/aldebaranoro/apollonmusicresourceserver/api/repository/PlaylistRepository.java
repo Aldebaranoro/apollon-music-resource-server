@@ -31,7 +31,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
      */
     @Query("select p from playlists p " +
             "where p.isPrivate = false and p.discordIdentity in :requestedDiscordIdentities" +
-            "       or p.discordIdentity = :requesterDiscordIdentity" +
+            "       or p.discordIdentity = :requesterDiscordIdentity and p.discordIdentity in :requestedDiscordIdentities" +
             "       and (:playlistName is null or p.name like concat('%', :playlistName, '%'))")
     Page<Playlist> findAllPlaylistsByDiscordIdentities(
             Pageable pageable,
