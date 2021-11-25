@@ -33,15 +33,24 @@ class AdminPlaylistController {
         );
     }
 
-    @PostMapping("/discord")
+    @GetMapping("/discord")
     public List<PlaylistRead> readByDiscordIdentities(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestBody Set<String> discordIdentities
+            @RequestParam String requesterDiscordIdentity,
+            @RequestParam Set<String> requestedDiscordIdentities,
+            @RequestParam(required = false) String playlistName
     ) {
         return mapper.toListViewRead(
-                playlistService.getPlaylistsByDiscordIds(pageNumber, pageSize, sortBy, discordIdentities)
+                playlistService.getPlaylistsByDiscordIds(
+                        pageNumber,
+                        pageSize,
+                        sortBy,
+                        requesterDiscordIdentity,
+                        requestedDiscordIdentities,
+                        playlistName
+                )
         );
     }
 

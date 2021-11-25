@@ -21,9 +21,22 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
 
     Page<Playlist> findAllByUserId(Pageable pageable, String userId);
 
-    @Query("select p from playlists p where p.discordIdentity in :discordIdentities")
+    /**
+     * Возвращает список всех плейлистов отправителя и публичных других пользователей
+     *
+     * @param pageable                   пагинация
+     * @param requesterDiscordIdentity   Discord identity отправителя запроса
+     * @param requestedDiscordIdentities Discord identities, по которым происходит фильтрация
+     * @return список всех плейлистов отправителя и публичных других пользователей
+     */
+    @Query("select p from playlists p " +
+            "where p.isPrivate = false and p.discordIdentity in :requestedDiscordIdentities" +
+            "       or p.discordIdentity = :requesterDiscordIdentity" +
+            "       and (:playlistName is null or p.name like concat('%', :playlistName, '%'))")
     Page<Playlist> findAllPlaylistsByDiscordIdentities(
             Pageable pageable,
-            @Param("discordIdentities") Set<String> discordIdentities
+            @Param("requesterDiscordIdentity") String requesterDiscordIdentity,
+            @Param("requestedDiscordIdentities") Set<String> requestedDiscordIdentities,
+            @Param("playlistName") String playlistName
     );
 }
