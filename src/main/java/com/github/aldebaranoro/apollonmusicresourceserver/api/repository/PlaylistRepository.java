@@ -38,6 +38,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
             @Param("requestedDiscordIdentities") Set<String> requestedDiscordIdentities
     );
 
+    // TODO: временное решение, лучше использовать полнотекстовый поиск с исправлением ошибок
     /**
      * Возвращает список всех плейлистов отправителя и публичных других пользователей
      *
@@ -47,9 +48,9 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
      * @return список всех плейлистов отправителя и публичных других пользователей
      */
     @Query("select p from playlists p " +
-            "where p.isPrivate = false and p.discordIdentity in :requestedDiscordIdentities" +
-            "       or p.discordIdentity = :requesterDiscordIdentity and p.discordIdentity in :requestedDiscordIdentities" +
-            "       and p.name like :playlistName")
+            "where (p.isPrivate = false and p.discordIdentity in :requestedDiscordIdentities" +
+            "       or p.discordIdentity = :requesterDiscordIdentity and p.discordIdentity in :requestedDiscordIdentities)" +
+            "       and p.name like concat('%', :playlistName, '%')")
     Page<Playlist> findAllPlaylistsByDiscordIdentitiesAndPlaylistName(
             Pageable pageable,
             @Param("requesterDiscordIdentity") String requesterDiscordIdentity,
