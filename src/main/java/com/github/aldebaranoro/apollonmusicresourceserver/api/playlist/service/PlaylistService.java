@@ -33,7 +33,7 @@ public class PlaylistService {
 
     public Playlist getPlaylistById(Long id) {
         return playlistRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Не найдена сущность с заданным id!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Не найден плейлист с заданным id!"));
     }
 
     public Playlist updatePlaylist(Playlist playlist) {
@@ -44,7 +44,7 @@ public class PlaylistService {
 
     public void deletePlaylistById(Long id) {
         if (!playlistExistById(id)) {
-            throw new ResourceNotFoundException("Не найдена сущность с заданным Id!");
+            throw new ResourceNotFoundException("Не найден плейлист с заданным Id!");
         }
         playlistRepository.deleteById(id);
     }

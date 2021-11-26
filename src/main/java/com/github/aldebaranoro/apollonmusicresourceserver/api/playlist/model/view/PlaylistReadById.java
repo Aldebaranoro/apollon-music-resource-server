@@ -1,6 +1,6 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.view;
 
-import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.view.TrackReadById;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.view.TrackRead;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,5 +23,5 @@ public class PlaylistReadById {
 
     private Boolean isPrivate;
 
-    private Set<TrackReadById> tracks;
+    private Set<TrackRead> tracks;
 }

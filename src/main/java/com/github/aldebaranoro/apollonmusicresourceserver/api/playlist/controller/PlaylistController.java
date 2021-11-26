@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/users/me/playlists")
 @RequiredArgsConstructor
-class PlaylistController {
+public class PlaylistController {
 
     private final PlaylistService playlistService;
     private final PlaylistMapper mapper = PlaylistMapper.INSTANCE;
@@ -54,13 +54,11 @@ class PlaylistController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlaylistReadById> read(@PathVariable Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
-        Playlist playlist = playlistService.getPlaylistById(id);
-
-        if (!playlist.getUserId().equals(KeycloakPrincipalUtils.getUserId(principal))) {
-            throw new ForbiddenException("У пользователя нету доступа к этому плейлисту!");
-        }
-        var result = mapper.toViewReadById(playlist);
+    public ResponseEntity<PlaylistReadById> read(
+            @PathVariable Long id,
+            KeycloakPrincipal<KeycloakSecurityContext> principal
+    ) {
+        var result = mapper.toViewReadById(getPlaylistById(id, principal));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -107,5 +105,14 @@ class PlaylistController {
             throw new ForbiddenException("У пользователя нету доступа к этому плейлисту!");
         }
         playlistService.deletePlaylistById(id);
+    }
+
+    public Playlist getPlaylistById(Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
+        Playlist playlist = playlistService.getPlaylistById(id);
+
+        if (!playlist.getUserId().equals(KeycloakPrincipalUtils.getUserId(principal))) {
+            throw new ForbiddenException("У пользователя нету доступа к этому плейлисту!");
+        }
+        return playlist;
     }
 }

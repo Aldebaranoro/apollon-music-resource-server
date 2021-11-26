@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-class PlaylistValidatorService {
+public class PlaylistValidatorService {
 
     private final int tracksMaxCount;
 
