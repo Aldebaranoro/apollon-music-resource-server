@@ -4,6 +4,7 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.entity
 import com.github.aldebaranoro.apollonmusicresourceserver.basic.AbstractTimestampEntity;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -35,7 +36,6 @@ public class Playlist extends AbstractTimestampEntity {
     @OneToMany(
             mappedBy = "playlist",
             orphanRemoval = true,
-            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
     private Set<Track> tracks;
