@@ -36,4 +36,8 @@ dependencies {
 	// Mappers
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+	// OpenAPI
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
+	implementation 'io.swagger.core.v3:swagger-annotations:2.1.11'
 }
