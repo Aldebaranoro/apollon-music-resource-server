@@ -3,7 +3,7 @@ package com.github.aldebaranoro.apollonmusicresourceserver.api.controller;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity.Playlist;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.mapper.PlaylistMapper;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistCreate;
-import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistRead;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistReadById;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistUpdate;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.service.PlaylistService;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.utils.KeycloakPrincipalUtils;
@@ -26,7 +26,7 @@ class PlaylistController {
     private final PlaylistMapper mapper = PlaylistMapper.INSTANCE;
 
     @GetMapping
-    public List<PlaylistRead> read(
+    public List<PlaylistReadById> read(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -39,7 +39,7 @@ class PlaylistController {
     }
 
     @PostMapping
-    public PlaylistRead create(
+    public PlaylistReadById create(
             @RequestBody PlaylistCreate playlistCreate,
             KeycloakPrincipal<KeycloakSecurityContext> principal
     ) {
@@ -52,7 +52,7 @@ class PlaylistController {
     }
 
     @GetMapping("/{id}")
-    public PlaylistRead read(@PathVariable Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
+    public PlaylistReadById read(@PathVariable Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
         Playlist playlist = playlistService.getPlaylistById(id);
 
         if (!playlist.getUserId().equals(KeycloakPrincipalUtils.getUserId(principal))) {
@@ -63,7 +63,7 @@ class PlaylistController {
     }
 
     @PutMapping("/{id}")
-    public PlaylistRead update(
+    public PlaylistReadById update(
             @PathVariable Long id,
             @RequestBody PlaylistUpdate playlistUpdate,
             KeycloakPrincipal<KeycloakSecurityContext> principal
@@ -84,7 +84,7 @@ class PlaylistController {
     }
 
     @DeleteMapping("/{id}")
-    public PlaylistRead delete(@PathVariable Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
+    public PlaylistReadById delete(@PathVariable Long id, KeycloakPrincipal<KeycloakSecurityContext> principal) {
         Playlist playlist = playlistService.getPlaylistById(id);
         if (!playlist.getUserId().equals(KeycloakPrincipalUtils.getUserId(principal))) {
             throw new ForbiddenException("У пользователя нету доступа к этому плейлисту!");

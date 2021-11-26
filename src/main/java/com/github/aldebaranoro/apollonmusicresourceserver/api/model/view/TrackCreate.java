@@ -13,5 +13,5 @@ public class TrackCreate {
 
     private String label;
 
-    private IdIntView musicService;
+    private MusicServiceSourceRead musicService;
 }

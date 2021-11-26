@@ -1,7 +1,7 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.controller;
 
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.mapper.PlaylistMapper;
-import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistRead;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistReadById;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.service.PlaylistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class PublicPlaylistController {
     private PlaylistMapper mapper = PlaylistMapper.INSTANCE;
 
     @GetMapping
-    public List<PlaylistRead> findAllPublicPlaylists(
+    public List<PlaylistReadById> findAllPublicPlaylists(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy
@@ -29,7 +29,7 @@ public class PublicPlaylistController {
     }
 
     @PostMapping("/discord")
-    public List<PlaylistRead> findAllPublicPlaylistsByDiscordIdentities(
+    public List<PlaylistReadById> findAllPublicPlaylistsByDiscordIdentities(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,

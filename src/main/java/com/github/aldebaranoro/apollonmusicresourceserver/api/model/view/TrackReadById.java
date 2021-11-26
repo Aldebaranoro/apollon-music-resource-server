@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrackRead {
+public class TrackReadById {
 
     private Long id;
 

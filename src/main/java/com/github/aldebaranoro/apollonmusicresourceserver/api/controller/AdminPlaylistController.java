@@ -3,7 +3,7 @@ package com.github.aldebaranoro.apollonmusicresourceserver.api.controller;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.entity.Playlist;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.mapper.PlaylistMapper;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistCreate;
-import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistRead;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistReadById;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.model.view.PlaylistUpdate;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.service.PlaylistService;
 import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.ResourceNotFoundException;
@@ -23,7 +23,7 @@ class AdminPlaylistController {
     private final PlaylistMapper mapper = PlaylistMapper.INSTANCE;
 
     @GetMapping
-    public List<PlaylistRead> read(
+    public List<PlaylistReadById> read(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy
@@ -34,7 +34,7 @@ class AdminPlaylistController {
     }
 
     @GetMapping("/discord")
-    public List<PlaylistRead> readByDiscordIdentities(
+    public List<PlaylistReadById> readByDiscordIdentities(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -55,7 +55,7 @@ class AdminPlaylistController {
     }
 
     @PostMapping
-    public PlaylistRead create(
+    public PlaylistReadById create(
             @RequestParam String userId,
             @RequestParam String discordIdentity,
             @RequestBody PlaylistCreate playlistCreate
@@ -74,14 +74,14 @@ class AdminPlaylistController {
     }
 
     @GetMapping("/{id}")
-    public PlaylistRead read(@PathVariable Long id) {
+    public PlaylistReadById read(@PathVariable Long id) {
         return mapper.toViewRead(
                 playlistService.getPlaylistById(id)
         );
     }
 
     @PutMapping("/{id}")
-    public PlaylistRead update(
+    public PlaylistReadById update(
             @PathVariable Long id,
             @RequestParam String userId,
             @RequestParam String discordIdentity,
@@ -104,7 +104,7 @@ class AdminPlaylistController {
     }
 
     @DeleteMapping("/{id}")
-    public PlaylistRead delete(@PathVariable Long id) {
+    public PlaylistReadById delete(@PathVariable Long id) {
         return mapper.toViewRead(
                 playlistService.deletePlaylistById(id)
         );

@@ -16,5 +16,5 @@ public class PlaylistUpdate {
 
     private Boolean isPrivate;
 
-    private Set<TrackRead> tracks;
+    private Set<TrackReadById> tracks;
 }
