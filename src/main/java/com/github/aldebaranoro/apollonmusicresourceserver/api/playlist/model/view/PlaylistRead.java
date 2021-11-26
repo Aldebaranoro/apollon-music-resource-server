@@ -20,4 +20,6 @@ public class PlaylistRead {
     private String discordIdentity;
 
     private Boolean isPrivate;
+
+    private Integer tracksCount;
 }
