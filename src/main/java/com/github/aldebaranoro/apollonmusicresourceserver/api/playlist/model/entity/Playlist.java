@@ -33,10 +33,10 @@ public class Playlist extends AbstractTimestampEntity {
     private Boolean isPrivate;
 
     @OneToMany(
+            mappedBy = "playlist",
             orphanRemoval = true,
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "playlist_id")
     private Set<Track> tracks;
 }

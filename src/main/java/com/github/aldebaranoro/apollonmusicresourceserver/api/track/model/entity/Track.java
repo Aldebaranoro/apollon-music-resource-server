@@ -1,6 +1,7 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.entity;
 
 import com.github.aldebaranoro.apollonmusicresourceserver.api.dict.model.entity.MusicServiceSource;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.entity.Playlist;
 import com.github.aldebaranoro.apollonmusicresourceserver.basic.AbstractTimestampEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,4 +26,8 @@ public class Track extends AbstractTimestampEntity {
     @ManyToOne
     @JoinColumn(name = "music_service_id", nullable = false)
     private MusicServiceSource musicService;
+
+    @ManyToOne
+    @JoinColumn(name = "playlist_id", nullable = false)
+    private Playlist playlist;
 }
