@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import java.util.Set;
 
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
@@ -49,7 +50,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     @Query("select p from playlists p " +
             "where (p.isPrivate = false and p.discordIdentity in :requestedDiscordIdentities" +
             "       or p.discordIdentity = :requesterDiscordIdentity and p.discordIdentity in :requestedDiscordIdentities)" +
-            "       and p.name like concat('%', :playlistName, '%')")
+            "       and lower(p.name) like lower(concat('%', :playlistName, '%')) ")
     Page<Playlist> findAllPlaylistsByDiscordIdentitiesAndPlaylistName(
             Pageable pageable,
             @Param("requesterDiscordIdentity") String requesterDiscordIdentity,
