@@ -5,6 +5,7 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.repositor
 import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.entity.Track;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.security.InvalidParameterException;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class PlaylistValidatorService {
      * @param playlist плейлист с треками
      */
     public void checkTrackMaxCount(Playlist playlist) {
-        if (playlist.getTracks().size() > tracksMaxCount) {
+        if (playlist.getTracks() != null && playlist.getTracks().size() > tracksMaxCount) {
             String message = String.format(
                     "Плейлист превышает допустимое число треков! Максимальная ёмкость плейлиста %s",
                     tracksMaxCount
