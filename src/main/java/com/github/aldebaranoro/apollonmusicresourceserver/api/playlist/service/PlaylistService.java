@@ -40,6 +40,12 @@ public class PlaylistService {
     public Playlist updatePlaylist(Playlist playlist) {
         playlistValidatorService.checkTrackMaxCount(playlist);
         playlistValidatorService.checkPlaylistTrackIds(playlist);
+
+        // FIXME: Добавляю треки из бд, чтобы не жаловалось на каскад.
+        //  Необходимо пофиксить, чтобы без этой херни работало
+        var tracks = getPlaylistById(playlist.getId()).getTracks();
+        playlist.setTracks(tracks);
+
         return playlistRepository.save(playlist);
     }
 
