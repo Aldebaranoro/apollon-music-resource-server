@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,7 @@ public class PlaylistValidatorService {
     }
 
     private Set<Long> getTrackIds(Playlist playlist) {
-        return playlist
+        return playlist.getTracks() == null ? new HashSet<>() : playlist
                 .getTracks()
                 .stream()
                 .map(Track::getId)
