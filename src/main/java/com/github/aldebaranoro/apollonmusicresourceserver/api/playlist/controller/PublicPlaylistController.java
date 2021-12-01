@@ -3,9 +3,11 @@ package com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.controll
 import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.mapper.PlaylistMapper;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.view.PlaylistRead;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.service.PlaylistService;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.validation.DiscordIdentity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Set;
 
+@Validated
 @RestController
 @RequestMapping("public/api/v1/playlists")
 @RequiredArgsConstructor
@@ -38,7 +41,7 @@ public class PublicPlaylistController {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam Set<String> discordIdentities
+            @DiscordIdentity @RequestParam Set<String> discordIdentities
     ) {
         var result = mapper.toListViewRead(
                 playlistService.getPublicPlaylistsByDiscordIds(pageNumber, pageSize, sortBy, discordIdentities)

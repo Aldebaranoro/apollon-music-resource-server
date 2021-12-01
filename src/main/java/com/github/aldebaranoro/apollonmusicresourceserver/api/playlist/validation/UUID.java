@@ -8,9 +8,13 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target(FIELD)
+/**
+ * Указывает, что данное поле необходимо проверить на валидность UUID
+ */
+@Target({FIELD, PARAMETER})
 @Constraint(validatedBy = {})
 @Retention(RUNTIME)
 @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")

@@ -4,15 +4,22 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.dict.model.view.Mu
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class TrackCreate {
 
+    @URL
+    @NotNull
     private String url;
 
+    @NotBlank
     private String label;
 
+    @NotNull
     private MusicServiceSourceRead musicService;
 }

@@ -7,14 +7,18 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.vie
 import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.view.PlaylistReadById;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.view.PlaylistUpdate;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.service.PlaylistService;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.validation.DiscordIdentity;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.validation.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.security.InvalidParameterException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
+@Validated
 @RestController
 @RequestMapping("admin/api/v1/playlists")
 @RequiredArgsConstructor
@@ -40,8 +44,8 @@ class AdminPlaylistController {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam String requesterDiscordIdentity,
-            @RequestParam Set<String> requestedDiscordIdentities,
+            @DiscordIdentity @RequestParam String requesterDiscordIdentity,
+            @DiscordIdentity @RequestParam Set<String> requestedDiscordIdentities,
             @RequestParam(required = false) String playlistName
     ) {
         var result = mapper.toListViewRead(
@@ -59,14 +63,10 @@ class AdminPlaylistController {
 
     @PostMapping
     public ResponseEntity<PlaylistReadById> create(
-            @RequestParam String userId,
-            @RequestParam String discordIdentity,
-            @RequestBody PlaylistCreate playlistCreate
+            @UUID @RequestParam String userId,
+            @DiscordIdentity @RequestParam String discordIdentity,
+            @Valid @RequestBody PlaylistCreate playlistCreate
     ) {
-        if (userId == null) {
-            throw new InvalidParameterException("Идентификатор пользователя должен быть заполнен!");
-        }
-
         Playlist playlist = mapper.toEntity(playlistCreate);
         playlist.setUserId(userId);
         playlist.setDiscordIdentity(discordIdentity);
@@ -87,9 +87,9 @@ class AdminPlaylistController {
     @PutMapping("/{id}")
     public ResponseEntity<PlaylistReadById> update(
             @PathVariable Long id,
-            @RequestParam String userId,
-            @RequestParam String discordIdentity,
-            @RequestBody PlaylistUpdate playlistUpdate
+            @UUID @RequestParam String userId,
+            @DiscordIdentity @RequestParam String discordIdentity,
+            @Valid @RequestBody PlaylistUpdate playlistUpdate
     ) {
         Playlist playlist = mapper.toEntity(playlistUpdate);
         playlist.setUserId(userId);

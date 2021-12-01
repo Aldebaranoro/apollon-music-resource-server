@@ -13,9 +13,12 @@ import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("api/v1/users/me/playlists/{playlistId}/tracks")
 @RequiredArgsConstructor
@@ -44,7 +47,7 @@ class TrackController {
     @PostMapping
     public ResponseEntity<TrackReadById> create(
             @PathVariable Long playlistId,
-            @RequestBody TrackCreate trackCreate,
+            @Valid @RequestBody TrackCreate trackCreate,
             KeycloakPrincipal<KeycloakSecurityContext> principal
     ) {
         Track track = mapper.toEntity(trackCreate);

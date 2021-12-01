@@ -5,6 +5,7 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.ent
 import com.github.aldebaranoro.apollonmusicresourceserver.basic.AbstractTimestampEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 
 @Getter
@@ -17,6 +18,7 @@ public class Track extends AbstractTimestampEntity {
     @Column(nullable = false)
     private Long id;
 
+    @URL
     @Column(nullable = false)
     private String url;
 
