@@ -14,9 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @Validated
 @RestController
@@ -45,7 +45,7 @@ class AdminPlaylistController {
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
             @DiscordIdentity @RequestParam String requesterDiscordIdentity,
-            @DiscordIdentity @RequestParam Set<String> requestedDiscordIdentities,
+            @RequestParam List<@DiscordIdentity String> requestedDiscordIdentities,
             @RequestParam(required = false) String playlistName
     ) {
         var result = mapper.toListViewRead(

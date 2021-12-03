@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
-import java.util.Set;
 
 @Validated
 @RestController
@@ -41,7 +41,7 @@ public class PublicPlaylistController {
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @DiscordIdentity @RequestParam Set<String> discordIdentities
+            @RequestParam List<@DiscordIdentity String> discordIdentities
     ) {
         var result = mapper.toListViewRead(
                 playlistService.getPublicPlaylistsByDiscordIds(pageNumber, pageSize, sortBy, discordIdentities)

@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class PlaylistController {
     @PutMapping("/{id}")
     public ResponseEntity<PlaylistReadById> update(
             @PathVariable Long id,
-            @RequestBody PlaylistUpdate playlistUpdate,
+            @Valid @RequestBody PlaylistUpdate playlistUpdate,
             KeycloakPrincipal<KeycloakSecurityContext> principal
     ) {
         Playlist playlist = mapper.toEntity(playlistUpdate);

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +69,7 @@ public class PlaylistService {
             Integer pageNumber,
             Integer pageSize,
             String sortBy,
-            Set<String> discordIds
+            List<String> discordIds
     ) {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
         Page<Playlist> pagedResult = playlistRepository.findAllPublicPlaylistsByDiscordIdentities(paging, discordIds);
@@ -82,7 +81,7 @@ public class PlaylistService {
             Integer pageSize,
             String sortBy,
             String requesterDiscordIdentity,
-            Set<String> requestedDiscordIdentities,
+            List<String> requestedDiscordIdentities,
             String playlistName
     ) {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
