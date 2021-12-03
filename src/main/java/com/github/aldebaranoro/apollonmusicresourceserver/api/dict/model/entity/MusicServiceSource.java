@@ -3,6 +3,7 @@ package com.github.aldebaranoro.apollonmusicresourceserver.api.dict.model.entity
 import com.github.aldebaranoro.apollonmusicresourceserver.basic.AbstractTimestampEntity;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 
 @Getter
@@ -11,7 +12,7 @@ import javax.persistence.*;
 public class MusicServiceSource extends AbstractTimestampEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Integer id;
 

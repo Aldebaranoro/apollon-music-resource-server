@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Track extends AbstractTimestampEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
 

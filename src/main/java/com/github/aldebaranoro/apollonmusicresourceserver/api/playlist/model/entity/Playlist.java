@@ -18,7 +18,7 @@ import java.util.List;
 public class Playlist extends AbstractTimestampEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
 
@@ -44,6 +44,7 @@ public class Playlist extends AbstractTimestampEntity {
     @OneToMany(
             mappedBy = "playlist",
             orphanRemoval = true,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
     private List<Track> tracks;
