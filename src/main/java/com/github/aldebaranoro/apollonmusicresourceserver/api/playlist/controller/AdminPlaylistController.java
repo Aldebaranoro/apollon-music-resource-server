@@ -88,7 +88,7 @@ class AdminPlaylistController {
     public ResponseEntity<PlaylistReadById> update(
             @PathVariable Long id,
             @UUID @RequestParam String userId,
-            @DiscordIdentity @RequestParam String discordIdentity,
+            @DiscordIdentity @RequestParam(required = false) String discordIdentity,
             @Valid @RequestBody PlaylistUpdate playlistUpdate
     ) {
         Playlist playlist = mapper.toEntity(playlistUpdate);
