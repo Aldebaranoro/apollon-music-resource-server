@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +22,7 @@ public class TrackUpdate {
     @NotBlank
     private String label;
 
+    @Valid
     @NotNull
     private MusicServiceSourceRead musicService;
 }
