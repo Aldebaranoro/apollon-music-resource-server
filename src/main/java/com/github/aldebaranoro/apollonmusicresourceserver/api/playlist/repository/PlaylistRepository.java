@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Set;
-
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
 
     Page<Playlist> findAllByIsPrivateFalse(Pageable pageable);
@@ -16,7 +14,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     @Query("select p from playlists p where p.isPrivate = false and p.discordIdentity in :discordIdentities")
     Page<Playlist> findAllPublicPlaylistsByDiscordIdentities(
             Pageable pageable,
-            @Param("discordIdentities") Set<String> discordIdentities
+            @Param("discordIdentities") Iterable<String> discordIdentities
     );
 
     Page<Playlist> findAllByUserId(Pageable pageable, String userId);
@@ -35,10 +33,11 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     Page<Playlist> findAllPlaylistsByDiscordIdentities(
             Pageable pageable,
             @Param("requesterDiscordIdentity") String requesterDiscordIdentity,
-            @Param("requestedDiscordIdentities") Set<String> requestedDiscordIdentities
+            @Param("requestedDiscordIdentities") Iterable<String> requestedDiscordIdentities
     );
 
     // TODO: временное решение, лучше использовать полнотекстовый поиск с исправлением ошибок
+
     /**
      * Возвращает список всех плейлистов отправителя и публичных других пользователей
      *
@@ -54,7 +53,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     Page<Playlist> findAllPlaylistsByDiscordIdentitiesAndPlaylistName(
             Pageable pageable,
             @Param("requesterDiscordIdentity") String requesterDiscordIdentity,
-            @Param("requestedDiscordIdentities") Set<String> requestedDiscordIdentities,
+            @Param("requestedDiscordIdentities") Iterable<String> requestedDiscordIdentities,
             @Param("playlistName") String playlistName
     );
 }
