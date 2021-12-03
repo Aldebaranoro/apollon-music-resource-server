@@ -64,7 +64,7 @@ class AdminPlaylistController {
     @PostMapping
     public ResponseEntity<PlaylistReadById> create(
             @UUID @RequestParam String userId,
-            @DiscordIdentity @RequestParam String discordIdentity,
+            @DiscordIdentity @RequestParam(required = false) String discordIdentity,
             @Valid @RequestBody PlaylistCreate playlistCreate
     ) {
         Playlist playlist = mapper.toEntity(playlistCreate);
