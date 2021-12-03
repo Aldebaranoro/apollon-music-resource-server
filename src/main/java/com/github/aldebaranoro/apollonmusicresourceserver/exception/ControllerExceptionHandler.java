@@ -4,6 +4,7 @@ import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.Forbidde
 import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,7 +19,7 @@ class ControllerExceptionHandler {
         return new ResponseEntity<>(message, httpStatus);
     }
 
-    @ExceptionHandler(InvalidParameterException.class)
+    @ExceptionHandler({InvalidParameterException.class, MethodArgumentNotValidException.class})
     public ResponseEntity<ExceptionView> invalidParameterException(Exception ex, HttpServletRequest request) {
         return error(ex, HttpStatus.BAD_REQUEST, request);
     }
