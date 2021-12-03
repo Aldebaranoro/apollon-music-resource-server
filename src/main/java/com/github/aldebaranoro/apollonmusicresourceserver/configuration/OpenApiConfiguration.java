@@ -19,7 +19,7 @@ public class OpenApiConfiguration {
                         .contact(new Contact().name("Anatoly Karas")
                                 .email("anatol.karas@gmail.com")))
                 .servers(List.of(
-                        new Server().url("https://apollon-music-keycloak.herokuapp.com").description("Heroku server"),
+                        new Server().url("https://apollon-music-resource-server.herokuapp.com").description("Heroku server"),
                         new Server().url("http://localhost:8080").description("Development local server")));
     }
 }
