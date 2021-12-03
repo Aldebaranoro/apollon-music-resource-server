@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.InvalidParameterException;
@@ -19,7 +20,11 @@ class ControllerExceptionHandler {
         return new ResponseEntity<>(message, httpStatus);
     }
 
-    @ExceptionHandler({InvalidParameterException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler({
+            InvalidParameterException.class,
+            MethodArgumentNotValidException.class,
+            MethodArgumentTypeMismatchException.class
+    })
     public ResponseEntity<ExceptionView> invalidParameterException(Exception ex, HttpServletRequest request) {
         return error(ex, HttpStatus.BAD_REQUEST, request);
     }
