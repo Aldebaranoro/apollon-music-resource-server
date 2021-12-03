@@ -1,6 +1,7 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.track.controller;
 
 import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.controller.PlaylistController;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.entity.Playlist;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.entity.Track;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.mapper.TrackMapper;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.view.TrackCreate;
@@ -53,8 +54,9 @@ class TrackController {
             @Valid @RequestBody TrackCreate trackCreate,
             KeycloakPrincipal<KeycloakSecurityContext> principal
     ) {
+        Playlist playlist = playlistController.getPlaylistById(playlistId, principal);
         Track track = mapper.toEntity(trackCreate);
-        track.setPlaylist(playlistController.getPlaylistById(playlistId, principal));
+        playlist.addTrack(track);
         var result = mapper.toViewReadById(
                 trackService.createTrack(track)
         );

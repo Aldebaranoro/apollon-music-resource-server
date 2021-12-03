@@ -39,7 +39,6 @@ public class TrackService {
     }
 
     public Track createTrack(Track track) {
-        track.getPlaylist().getTracks().add(track);
         checkTrackMaxCount(track.getPlaylist());
         return trackRepository.save(track);
     }
