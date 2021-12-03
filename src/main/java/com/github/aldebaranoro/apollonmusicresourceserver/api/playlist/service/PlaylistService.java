@@ -9,16 +9,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class PlaylistService {
 
     private final PlaylistRepository playlistRepository;
-    private final PlaylistValidatorService playlistValidatorService;
 
     public List<Playlist> getPlaylistsByUserId(Integer pageNumber, Integer pageSize, String sortBy, String userId) {
         Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
@@ -26,8 +28,7 @@ public class PlaylistService {
         return pagedResult.hasContent() ? pagedResult.getContent() : new ArrayList<>();
     }
 
-    public Playlist createPlaylist(Playlist playlist) {
-        playlistValidatorService.checkTrackMaxCount(playlist);
+    public Playlist createPlaylist(@Valid Playlist playlist) {
         return playlistRepository.save(playlist);
     }
 
@@ -36,10 +37,7 @@ public class PlaylistService {
                 .orElseThrow(() -> new ResourceNotFoundException("Не найден плейлист с заданным id!"));
     }
 
-    public Playlist updatePlaylist(Playlist playlist) {
-        playlistValidatorService.checkTrackMaxCount(playlist);
-        playlistValidatorService.checkPlaylistTrackIds(playlist);
-
+    public Playlist updatePlaylist(@Valid Playlist playlist) {
         // FIXME: Добавляю треки из бд, чтобы не жаловалось на каскад.
         //  Необходимо пофиксить, чтобы без этой херни работало
         var tracks = getPlaylistById(playlist.getId()).getTracks();

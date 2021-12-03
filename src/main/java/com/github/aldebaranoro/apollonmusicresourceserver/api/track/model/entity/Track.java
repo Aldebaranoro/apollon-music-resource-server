@@ -6,6 +6,7 @@ import com.github.aldebaranoro.apollonmusicresourceserver.basic.AbstractTimestam
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.*;
 
 @Getter

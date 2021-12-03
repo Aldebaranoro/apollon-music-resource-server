@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
+import javax.validation.Validator;
 import java.util.List;
 
 @Validated
@@ -26,6 +28,7 @@ class TrackController {
 
     private final TrackService trackService;
     private final PlaylistController playlistController;
+    private final Validator validator;
     private final TrackMapper mapper = TrackMapper.INSTANCE;
 
     @GetMapping

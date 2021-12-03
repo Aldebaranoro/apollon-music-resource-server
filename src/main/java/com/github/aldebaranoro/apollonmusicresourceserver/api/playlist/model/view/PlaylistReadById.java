@@ -4,7 +4,8 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.view.T
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Set;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,5 +24,5 @@ public class PlaylistReadById {
 
     private Boolean isPrivate;
 
-    private Set<TrackRead> tracks;
+    private List<TrackRead> tracks;
 }

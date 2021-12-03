@@ -1,24 +1,30 @@
 package com.github.aldebaranoro.apollonmusicresourceserver.api.track.service;
 
-import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.service.PlaylistValidatorService;
+import com.github.aldebaranoro.apollonmusicresourceserver.api.playlist.model.entity.Playlist;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.entity.Track;
 import com.github.aldebaranoro.apollonmusicresourceserver.api.track.repository.TrackRepository;
 import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.ResourceNotFoundException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class TrackService {
 
     private final TrackRepository trackRepository;
-    private final PlaylistValidatorService playlistValidatorService;
+    private final int tracksMaxCount;
+
+    public TrackService(TrackRepository trackRepository, @Value("${limit.track.max-count}") int tracksMaxCount) {
+        this.trackRepository = trackRepository;
+        this.tracksMaxCount = tracksMaxCount;
+    }
 
     public List<Track> getPlaylistTracksByUserId(
             Integer pageNumber,
@@ -33,7 +39,8 @@ public class TrackService {
     }
 
     public Track createTrack(Track track) {
-        playlistValidatorService.checkTrackMaxCount(track.getPlaylist());
+        track.getPlaylist().getTracks().add(track);
+        checkTrackMaxCount(track.getPlaylist());
         return trackRepository.save(track);
     }
 
@@ -51,5 +58,15 @@ public class TrackService {
 
     public Boolean trackExistById(Long id) {
         return trackRepository.existsById(id);
+    }
+
+    private void checkTrackMaxCount(Playlist playlist) {
+        if (playlist.getTracks() != null && playlist.getTracks().size() > tracksMaxCount) {
+            String message = String.format(
+                    "Невозможно добавить трек в плейлист, максимальная ёмкость плейлиста равна %s",
+                    tracksMaxCount
+            );
+            throw new InvalidParameterException(message);
+        }
     }
 }
