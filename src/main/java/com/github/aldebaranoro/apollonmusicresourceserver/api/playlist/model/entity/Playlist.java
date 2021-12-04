@@ -44,7 +44,6 @@ public class Playlist extends AbstractTimestampEntity {
     @Size(max = 10)
     @OneToMany(
             mappedBy = "playlist",
-            orphanRemoval = true,
             cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
