@@ -7,6 +7,7 @@ import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.view.T
 import com.github.aldebaranoro.apollonmusicresourceserver.api.track.model.view.TrackUpdate;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
 import java.util.List;
 
 @Mapper

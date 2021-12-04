@@ -2,6 +2,7 @@ package com.github.aldebaranoro.apollonmusicresourceserver.basic;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;

@@ -22,7 +22,7 @@ import java.util.List;
 public class PublicPlaylistController {
 
     private final PlaylistService playlistService;
-    private PlaylistMapper mapper = PlaylistMapper.INSTANCE;
+    private final PlaylistMapper mapper = PlaylistMapper.INSTANCE;
 
     @GetMapping
     public ResponseEntity<List<PlaylistRead>> findAllPublicPlaylists(
