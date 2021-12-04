@@ -31,24 +31,15 @@ class AdminPlaylistController {
     public ResponseEntity<List<PlaylistRead>> read(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
-    ) {
-        var result = mapper.toListViewRead(
-                playlistService.getPlaylists(pageNumber, pageSize, sortBy)
-        );
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @GetMapping("/discord")
-    public ResponseEntity<List<PlaylistRead>> readByDiscordIdentities(
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @DiscordIdentity @RequestParam String requesterDiscordIdentity,
-            @RequestParam List<@DiscordIdentity String> requestedDiscordIdentities,
+            @DiscordIdentity @RequestParam(required = false) String requesterDiscordIdentity,
+            @RequestParam(required = false) List<@DiscordIdentity String> requestedDiscordIdentities,
             @RequestParam(required = false) String playlistName
     ) {
-        var result = mapper.toListViewRead(
+        boolean isAllRequest = requesterDiscordIdentity == null
+                && (requestedDiscordIdentities == null || requestedDiscordIdentities.isEmpty());
+        var playlists = isAllRequest ?
+                playlistService.getPlaylists(pageNumber, pageSize, sortBy) :
                 playlistService.getPlaylistsByDiscordIds(
                         pageNumber,
                         pageSize,
@@ -56,8 +47,8 @@ class AdminPlaylistController {
                         requesterDiscordIdentity,
                         requestedDiscordIdentities,
                         playlistName
-                )
-        );
+                );
+        var result = mapper.toListViewRead(playlists);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

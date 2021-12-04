@@ -28,24 +28,13 @@ public class PublicPlaylistController {
     public ResponseEntity<List<PlaylistRead>> findAllPublicPlaylists(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
-    ) {
-        var result = mapper.toListViewRead(
-                playlistService.getPublicPlaylists(pageNumber, pageSize, sortBy)
-        );
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @GetMapping("/discord")
-    public ResponseEntity<List<PlaylistRead>> findAllPublicPlaylistsByDiscordIdentities(
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam List<@DiscordIdentity String> discordIdentities
+            @RequestParam(required = false) List<@DiscordIdentity String> discordIdentities
     ) {
-        var result = mapper.toListViewRead(
-                playlistService.getPublicPlaylistsByDiscordIds(pageNumber, pageSize, sortBy, discordIdentities)
-        );
+        var playlists = discordIdentities == null || discordIdentities.isEmpty()
+                ? playlistService.getPublicPlaylists(pageNumber, pageSize, sortBy)
+                : playlistService.getPublicPlaylistsByDiscordIds(pageNumber, pageSize, sortBy, discordIdentities);
+        var result = mapper.toListViewRead(playlists);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
