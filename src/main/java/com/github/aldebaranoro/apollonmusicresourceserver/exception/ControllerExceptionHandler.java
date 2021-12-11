@@ -4,7 +4,7 @@ import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.Forbidde
 import com.github.aldebaranoro.apollonmusicresourceserver.exception.dto.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -16,13 +16,24 @@ import java.security.InvalidParameterException;
 class ControllerExceptionHandler {
 
     private ResponseEntity<ExceptionView> error(Exception ex, HttpStatus httpStatus, HttpServletRequest request) {
-        var message = new ExceptionView(httpStatus, ex.getMessage(), request.getRequestURI());
-        return new ResponseEntity<>(message, httpStatus);
+        var exceptionView = new ExceptionView(httpStatus, ex.getMessage(), request.getRequestURI());
+        return new ResponseEntity<>(exceptionView, httpStatus);
+    }
+
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<ValidateExceptionView> validateException(BindException ex, HttpServletRequest request) {
+        var httpStatus = HttpStatus.BAD_REQUEST;
+        var exceptionView = new ValidateExceptionView(
+                httpStatus,
+                "Validation failed",
+                request.getRequestURI(),
+                ex.getBindingResult().getFieldErrors()
+        );
+        return new ResponseEntity<>(exceptionView, httpStatus);
     }
 
     @ExceptionHandler({
             InvalidParameterException.class,
-            MethodArgumentNotValidException.class,
             MethodArgumentTypeMismatchException.class
     })
     public ResponseEntity<ExceptionView> invalidParameterException(Exception ex, HttpServletRequest request) {
